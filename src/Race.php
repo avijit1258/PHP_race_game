@@ -1,10 +1,20 @@
 <?php
 
+include('RaceResult.php');
+
 class Race
 {
+	
     public function runRace(): RaceResult
     {
-        return null;
+
+    	
+
+    	$race_result = new RaceResult;
+
+        return $race_result;
     }
+
+    
 
 }
