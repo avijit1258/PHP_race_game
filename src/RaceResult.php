@@ -34,13 +34,8 @@ class RaceResult
     		$carsPosition = array();
     		for($i = 0; $this->cars[$i]; $i++)
     		{
-    			$current_speed;
-    			if($this->track->getTrack()[0] == 'S')
-    			{
-    				$current_speed = $this->cars[$i]->getSpeedOnStraight();
-    			}else{
-    				$current_speed = $this->cars[$i]->getSpeedOnCurve();
-    			}
+    			$current_speed = ($this->track->getTrack()[0] == 'S') ? $this->cars[$i]->getSpeedOnStraight(): $this->cars[$i]->getSpeedOnCurve();
+    			
 
     			if($step == 0)
     			{
