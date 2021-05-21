@@ -3,23 +3,22 @@
 class Track
 {
 
-	private $TOTAL_ELEMENTS = 2000;
-
 	private $track_array;
 
-    public function __construct()
+    public function __construct(int $total_elements)
     {
-    	$this->track_array = generateTrack($TOTAL_ELEMENTS);
+    	
+    	$this->track_array = $this->generateTrack($total_elements);
     }
 
     private function generateTrack(int $total_elements): array
     {
     	$element_type = 'S';
-    	$track_array; = array()
+    	$track_array = array();
 
-    	for($i = 1; $i <= $this->TOTAL_ELEMENTS; $i++)
+    	for($i = 1; $i <= $total_elements; $i++)
     	{
-    		if($i % 40 === 0) // after 40 elements change element type randomly
+    		if($i % 40 == 0) // after 40 elements change element type randomly
     		{
     			if(rand(0,1) == 0)
     			{
@@ -29,9 +28,9 @@ class Track
     				$element_type = 'C';
     			}
     		}
-    		array_push($track_array, $element_type)
+    		array_push($track_array, $element_type);
     	}
-    	return $track_array
+    	return $track_array;
     }
 
     public function getTrack(): array
