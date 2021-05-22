@@ -11,20 +11,32 @@ class RaceResult
      */
     private $roundResults = [];
 
+    /**
+     * @var array of Car
+     */
+
     private $cars = array();
 
+    /**
+     * @var array of Track
+     */
+
     private $track;
+
+    private $NUM_OF_CARS = 5;
+    private $TOTAL_ELEMENTS = 2000;
+
 
     public function __construct()
     {
 
     	$this->createCars(5);
     	$this->createTrack(2000);
-    	$this->run_race_rounds();
+    	$this->runRaceRounds();
 
     }
 
-    private function run_race_rounds()
+    private function runRaceRounds()
     {
     	$step = 0;
     	$raceFinished = false;
@@ -44,12 +56,12 @@ class RaceResult
     				$previous_position = $this->roundResults[$step - 1]->carsPosition[$i];
     				$next_position = $previous_position + $current_speed;
 
-    				if($next_position >= 2000)
+    				if($next_position >= $this->TOTAL_ELEMENTS)
     				{
     					$raceFinished = true;
     				}
 
-    				if($this->track->getTrack()[$previous_position] != $this->track->getTrack()[$next_position])
+    				if($this->track[$previous_position] != $this->track[$next_position])
     				{
     					$next_position = $this->getStartPositionNextType($previous_position, $next_position);
     				}
@@ -94,7 +106,8 @@ class RaceResult
 
     private function createTrack(int $total_elements)
     {
-    	$this->track = new Track($total_elements);
+    	$track = new Track($total_elements);
+    	$this->track = $track->getTrack()
 		
     }
 }
