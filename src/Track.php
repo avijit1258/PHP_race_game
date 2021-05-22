@@ -5,10 +5,10 @@ class Track
 
 	private $track_array;
 
-	private $element_block = 40
+	private static $ELEMENT_BLOCK = 40;
 
-	private $STRAIGHT = 0;
-	private $CURVE = 1;
+	public static $STRAIGHT = 0;
+	public static $CURVE = 1;
 
     public function __construct(int $total_elements)
     {
@@ -18,19 +18,19 @@ class Track
 
     private function generateTrack(int $total_elements): array
     {
-    	$element_type = $this->STRAIGHT;
+    	$element_type = self::$STRAIGHT;
     	$track_array = array();
 
     	for($i = 1; $i <= $total_elements; $i++)
     	{
-    		if($i % $this->element_block == 0) // after 40 elements change element type randomly
+    		if($i % self::$ELEMENT_BLOCK == 0) // after 40 elements change element type randomly
     		{
     			if(rand(0,1) == 0)
     			{
-    				$element_type = $this->STRAIGHT;
+    				$element_type = self::$STRAIGHT;
     			}
     			else{
-    				$element_type = $this->CURVE;
+    				$element_type = self::$CURVE;
     			}
     		}
     		array_push($track_array, $element_type);

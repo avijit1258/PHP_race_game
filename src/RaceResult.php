@@ -23,15 +23,15 @@ class RaceResult
 
     private $track;
 
-    private $NUM_OF_CARS = 5;
-    private $TOTAL_ELEMENTS = 2000;
+    private static $NUM_OF_CARS = 5;
+    private static $TOTAL_ELEMENTS = 2000;
 
 
     public function __construct()
     {
 
-    	$this->createCars(5);
-    	$this->createTrack(2000);
+    	$this->createCars(self::$NUM_OF_CARS);
+    	$this->createTrack(self::$TOTAL_ELEMENTS);
     	$this->runRaceRounds();
 
     }
@@ -44,26 +44,28 @@ class RaceResult
     	{	
 
     		$carsPosition = array();
-    		for($i = 0; $this->cars[$i]; $i++)
+    		for($i = 0; $i < count($this->cars); $i++)
     		{
-    			$current_speed = ($this->track->getTrack()[0] == 'S') ? $this->cars[$i]->getSpeedOnStraight(): $this->cars[$i]->getSpeedOnCurve();
-    			
 
     			if($step == 0)
     			{
+    				$current_speed = ($this->track[0] == Track::$STRAIGHT) ? $this->cars[$i]->getSpeedOnStraight(): $this->cars[$i]->getSpeedOnCurve();
     				array_push($carsPosition, $current_speed);
     			}else{
+    				
     				$previous_position = $this->roundResults[$step - 1]->carsPosition[$i];
+    				$current_speed = ($this->track[$previous_position] == Track::$STRAIGHT) ? $this->cars[$i]->getSpeedOnStraight(): $this->cars[$i]->getSpeedOnCurve();
     				$next_position = $previous_position + $current_speed;
-
-    				if($next_position >= $this->TOTAL_ELEMENTS)
-    				{
-    					$raceFinished = true;
-    				}
 
     				if($this->track[$previous_position] != $this->track[$next_position])
     				{
+    
     					$next_position = $this->getStartPositionNextType($previous_position, $next_position);
+    				}
+
+    				if($next_position >= self::$TOTAL_ELEMENTS)
+    				{
+    					$raceFinished = true;
     				}
 
     				array_push($carsPosition, $next_position);
@@ -82,13 +84,13 @@ class RaceResult
         return $this->roundResults;
     }
 
-    private function getStartPositionNextType(int $prev_position, int $next_position)
+    private function getStartPositionNextType(int $prev_position, int $next_position) : int
     {
     	$startPosition;
 
     	for($i = $prev_position + 1; $i <= $next_position; $i++)
     	{
-    		if($this->track->getTrack()[$i - 1] != $this->track->getTrack()[$i])
+    		if($this->track[$i - 1] != $this->track[$i])
     		{
     			return $i;
     		}
@@ -107,7 +109,7 @@ class RaceResult
     private function createTrack(int $total_elements)
     {
     	$track = new Track($total_elements);
-    	$this->track = $track->getTrack()
+    	$this->track = $track->getTrack();
 		
     }
 }
