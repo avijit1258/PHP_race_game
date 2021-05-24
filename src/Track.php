@@ -3,44 +3,45 @@
 class Track
 {
 
-	private $track_array;
+	private $trackArray;
 
-	private static $ELEMENT_BLOCK = 40;
+	private $elementPerBlock;
 
 	public static $STRAIGHT = 0;
 	public static $CURVE = 1;
 
-    public function __construct(int $total_elements)
+    public function __construct(int $totalElements, int $elementPerBlock)
     {
     	
-    	$this->track_array = $this->generateTrack($total_elements);
+    	$this->elementPerBlock = $elementPerBlock;
+    	$this->trackArray = $this->generateTrack($totalElements);
     }
 
-    private function generateTrack(int $total_elements): array
+    private function generateTrack(int $totalElements): array
     {
-    	$element_type = self::$STRAIGHT;
-    	$track_array = array();
+    	$elementType = self::$STRAIGHT;
+    	$trackArray = array();
 
-    	for($i = 1; $i <= $total_elements; $i++)
+    	for($i = 1; $i <= $totalElements; $i++)
     	{
-    		if($i % self::$ELEMENT_BLOCK == 0) // after 40 elements change element type randomly
+    		if($i % $this->elementPerBlock == 0) // after 40 elements change element type randomly
     		{
     			if(rand(0,1) == 0)
     			{
-    				$element_type = self::$STRAIGHT;
+    				$elementType = self::$STRAIGHT;
     			}
     			else{
-    				$element_type = self::$CURVE;
+    				$elementType = self::$CURVE;
     			}
     		}
-    		array_push($track_array, $element_type);
+    		array_push($trackArray, $element_type);
     	}
-    	return $track_array;
+    	return $trackArray;
     }
 
     public function getTrack(): array
     {
-    	return $this->track_array;
+    	return $this->trackArray;
     }
 
     

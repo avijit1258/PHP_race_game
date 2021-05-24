@@ -8,11 +8,10 @@ class Race
     public function runRace(): RaceResult
     {
 
-    	
 
-    	$race_result = new RaceResult;
+    	$raceResult = new RaceResult(5, 2000, 40);
 
-        return $race_result;
+        return $raceResult;
     }
 
     
